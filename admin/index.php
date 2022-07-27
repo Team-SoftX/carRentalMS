@@ -3,7 +3,7 @@ session_start();
 include('includes/config.php');
 if (isset($_POST['login'])) {
 	$email = $_POST['Username'];
-	$Password = md5($_POST['Password']);
+	$Password = $_POST['Password'];
 	$sql = "SELECT Username,Password FROM admin WHERE Username=:email and Password=:Password";
 	$query = $dbh->prepare($sql);
 	$query->bindParam(':email', $email, PDO::PARAM_STR);
