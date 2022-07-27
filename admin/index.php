@@ -1,44 +1,44 @@
 <?php
 session_start();
 include('includes/config.php');
-// if (isset($_POST['login'])) {
-// 	$email = $_POST['username'];
-// 	$password = md5($_POST['password']);
-// 	$sql = "SELECT UserName,Password FROM admin1 WHERE UserName=:email and Password=:password";
-// 	$query = $dbh->prepare($sql);
-// 	$query->bindParam(':email', $email, PDO::PARAM_STR);
-// 	$query->bindParam(':password', $password, PDO::PARAM_STR);
-// 	$query->execute();
-// 	$results = $query->fetchAll(PDO::FETCH_OBJ);
-// 	if ($query->rowCount() > 0) {
-// 		$_SESSION['alogin'] = $_POST['username'];
-
-// 		echo "<script type='text/javascript'> document.location = 'change-password.php'; </script>";
-// 	} else {
-
-// 		echo "<script type='text/javascript'> document.location = 'manage-brands.php'; </script>";
-// 		// echo "<script>alert('Invalid Details');</script>";
-// 	}
-// }
-
-if (isset($_POST['username'])) {
-	$email = $_POST['username'];
-	$password = md5($_POST['username']);
-	$sql = "SELECT EmailId,Password,FullName FROM tblusers WHERE EmailId=:email and Password=:password";
+if (isset($_POST['login'])) {
+	$email = $_POST['Username'];
+	$Password = md5($_POST['Password']);
+	$sql = "SELECT Username,Password FROM admin WHERE Username=:email and Password=:Password";
 	$query = $dbh->prepare($sql);
 	$query->bindParam(':email', $email, PDO::PARAM_STR);
-	$query->bindParam(':password', $password, PDO::PARAM_STR);
+	$query->bindParam(':Password', $Password, PDO::PARAM_STR);
 	$query->execute();
 	$results = $query->fetchAll(PDO::FETCH_OBJ);
 	if ($query->rowCount() > 0) {
-		$_SESSION['login'] = $_POST['username'];
-		$_SESSION['fname'] = $_POST['username'];
-		$currentpage = $_SERVER['REQUEST_URI'];
-		echo "<script type='text/javascript'> document.location = '$currentpage'; </script>";
+		$_SESSION['alogin'] = $_POST['Username'];
+
+		echo "<script type='text/javascript'> document.location = 'change-Password.php'; </script>";
 	} else {
-		echo "<script>alert('Invalid Details');</script>";
+
+		echo "<script type='text/javascript'> document.location = 'manage-brands.php'; </script>";
+		// echo "<script>alert('Invalid Details');</script>";
 	}
 }
+
+// if (isset($_POST['Username'])) {
+// 	$email = $_POST['Username'];
+// 	$Password = md5($_POST['Username']);
+// 	$sql = "SELECT EmailId,Password,FullName FROM tblusers WHERE EmailId=:email and Password=:Password";
+// 	$query = $dbh->prepare($sql);
+// 	$query->bindParam(':email', $email, PDO::PARAM_STR);
+// 	$query->bindParam(':Password', $Password, PDO::PARAM_STR);
+// 	$query->execute();
+// 	$results = $query->fetchAll(PDO::FETCH_OBJ);
+// 	if ($query->rowCount() > 0) {
+// 		$_SESSION['login'] = $_POST['Username'];
+// 		$_SESSION['fname'] = $_POST['Username'];
+// 		$currentpage = $_SERVER['REQUEST_URI'];
+// 		echo "<script type='text/javascript'> document.location = '$currentpage'; </script>";
+// 	} else {
+// 		echo "<script>alert('Invalid Details');</script>";
+// 	}
+// }
 
 ?>
 <!doctype html>
@@ -75,10 +75,10 @@ if (isset($_POST['username'])) {
 								<form method="post">
 
 									<label for="" class="text-uppercase text-sm">Your Username </label>
-									<input type="text" placeholder="Username" name="username" class="form-control mb">
+									<input type="text" placeholder="Username" name="Username" class="form-control mb">
 
 									<label for="" class="text-uppercase text-sm">Password</label>
-									<input type="password" placeholder="Password" name="password" class="form-control mb">
+									<input type="Password" placeholder="Password" name="Password" class="form-control mb">
 
 
 
