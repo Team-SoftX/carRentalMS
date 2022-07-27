@@ -13,7 +13,7 @@ if (isset($_POST['login'])) {
 	if ($query->rowCount() > 0) {
 		$_SESSION['alogin'] = $_POST['Username'];
 
-		echo "<script type='text/javascript'> document.location = 'change-Password.php'; </script>";
+		echo "<script type='text/javascript'> document.location = 'dashboard.php'; </script>";
 	} else {
 
 		echo "<script type='text/javascript'> document.location = 'manage-brands.php'; </script>";
@@ -21,24 +21,6 @@ if (isset($_POST['login'])) {
 	}
 }
 
-// if (isset($_POST['Username'])) {
-// 	$email = $_POST['Username'];
-// 	$Password = md5($_POST['Username']);
-// 	$sql = "SELECT EmailId,Password,FullName FROM tblusers WHERE EmailId=:email and Password=:Password";
-// 	$query = $dbh->prepare($sql);
-// 	$query->bindParam(':email', $email, PDO::PARAM_STR);
-// 	$query->bindParam(':Password', $Password, PDO::PARAM_STR);
-// 	$query->execute();
-// 	$results = $query->fetchAll(PDO::FETCH_OBJ);
-// 	if ($query->rowCount() > 0) {
-// 		$_SESSION['login'] = $_POST['Username'];
-// 		$_SESSION['fname'] = $_POST['Username'];
-// 		$currentpage = $_SERVER['REQUEST_URI'];
-// 		echo "<script type='text/javascript'> document.location = '$currentpage'; </script>";
-// 	} else {
-// 		echo "<script>alert('Invalid Details');</script>";
-// 	}
-// }
 
 ?>
 <!doctype html>
