@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
@@ -9,7 +10,28 @@ require "db.php";
 $app = new \Slim\App;
 
 
+$app->get('/mybookings', function (Request $request, Response $response, array $args) {
 
+    $useremail = $_SESSION['login'];
+    $sql = "SELECT tblvehicles.Vimage1 as Vimage1,tblvehicles.VehiclesTitle,tblvehicles.id as vid,tblbrands.BrandName,tblbooking.FromDate,tblbooking.ToDate,tblbooking.message,tblbooking.Status  from tblbooking join tblvehicles on tblbooking.VehicleId=tblvehicles.id join tblbrands on tblbrands.id=tblvehicles.VehiclesBrand where tblbooking.userEmail=:useremail";
+
+    try {
+        // Get DB Objectqw
+        $db = new db();
+        // Connect
+        $db = $db->connect();
+
+        $query = $db->prepare($sql);
+        $query->bindParam(':useremail', $useremail, PDO::PARAM_STR);
+        $query->execute();
+        $results = $query->fetchAll(PDO::FETCH_OBJ);
+        $db = null;
+        echo json_encode($results);
+    } catch (PDOException $e) {
+        $results = array("status" => "fail");
+        echo json_encode($results);
+    }
+});
 
 $app->post('/antiqueitem', function (Request $request, Response $response, array $args) {
 
