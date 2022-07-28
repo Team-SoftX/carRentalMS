@@ -93,8 +93,12 @@ if (strlen($_SESSION['login']) == 0) {
           <div class="container">
             <h5 class="uppercase underline">My Booikngs </h5>
             <div class="my_vehicles_list">
-              <ul class="vehicle_listing">
-                <?php
+
+              <ol id="vehicle_listing1">
+
+              </ol>
+              <!-- <ul class="vehicle_listing">
+                <!?php
                 $useremail = $_SESSION['login'];
                 $sql = "SELECT tblvehicles.Vimage1 as Vimage1,tblvehicles.VehiclesTitle,tblvehicles.id as vid,tblbrands.BrandName,tblbooking.FromDate,tblbooking.ToDate,tblbooking.message,tblbooking.Status  from tblbooking join tblvehicles on tblbooking.VehicleId=tblvehicles.id join tblbrands on tblbrands.id=tblvehicles.VehiclesBrand where tblbooking.userEmail=:useremail";
                 $query = $dbh->prepare($sql);
@@ -109,43 +113,41 @@ if (strlen($_SESSION['login']) == 0) {
                 ?>
 
                     <li>
-                      <div class="vehicle_img"> <a href="vehical-details.php?vhid=<?php echo htmlentities($result->vid); ?>"><img src=" admin/img/vehicleimages/<?php echo htmlentities($result->Vimage1); ?>" alt="image"></a> </div>
+                      <div class="vehicle_img"> <a href="vehical-details.php?vhid=<!?php echo htmlentities($result->vid); ?>"><img src=" admin/img/vehicleimages/<!?php echo htmlentities($result->Vimage1); ?>" alt="image"></a> </div>
                       <div class="vehicle_title">
-                        <h6><a href="vehical-details.php?vhid=<?php echo htmlentities($result->vid); ?>""> <?php echo htmlentities($result->BrandName); ?> , <?php echo htmlentities($result->VehiclesTitle); ?></a></h6>
-                         <p><b>From Date:</b> <?php echo htmlentities($result->FromDate); ?><br /> <b>To Date:</b> <?php echo htmlentities($result->ToDate); ?></p>
+                        <h6><a href="vehical-details.php?vhid=<!?php echo htmlentities($result->vid); ?>""> <!?php echo htmlentities($result->BrandName); ?> , <!?php echo htmlentities($result->VehiclesTitle); ?></a></h6>
+                         <p><b>From Date:</b> <!?php echo htmlentities($result->FromDate); ?><br /> <b>To Date:</b> <!?php echo htmlentities($result->ToDate); ?></p>
                       </div>
                       
-                  <?php if ($result->Status == 1) { ?>
+                  <!?php if ($result->Status == 1) { ?>
                       <div class=" vehicle_status"> <a href="#" class="btn outline btn-xs active-btn">Confirmed</a>
-                            <div class="clearfix"></div>
+
                       </div>
 
-                    <?php } else if ($result->Status == 2) { ?>
+                    <!?php } else if ($result->Status == 2) { ?>
                       <div class="vehicle_status"> <a href="#" class="btn outline btn-xs">Cancelled</a>
-                        <div class="clearfix"></div>
+
                       </div>
 
 
 
-                    <?php } else { ?>
+                    <!?php } else { ?>
                       <div class="vehicle_status"> <a href="#" class="btn outline btn-xs">Not Confirm yet</a>
                         <div class="clearfix"></div>
                       </div>
-                    <?php } ?>
+                    <!?php } ?>
                     <div style="float: left">
-                      <p><b>Message:</b> <?php echo htmlentities($result->message); ?> </p>
+                      <p><b>Message:</b> <!?php echo htmlentities($result->message); ?> </p>
                     </div>
                     </li>
-                <?php }
+                <!?php }
                 } ?>
 
 
-              </ul>
+              </ul> -->
 
 
-              <ul id="vehicle_listing1">
 
-              </ul>
             </div>
           </div>
         </div>
@@ -204,60 +206,28 @@ if (strlen($_SESSION['login']) == 0) {
         const myObj = JSON.parse(this.responseText);
         if (this.readyState == 4 && this.status == 200) {
 
-          var content = "dsfdf";
+          var content = "";
 
           for (let i = 0; i < myObj.length; i++) {
-            // content +=
-            //   "<tr><td>" +
-            //   myObj[i].itemid +
-            //   "</td>" +
-            //   "<td>" +
-            //   myObj[i].description +
-            //   "</td>" +
-            //   "<td>" +
-            //   myObj[i].category +
-            //   "</td>" +
-            //   "<td>" +
-            //   myObj[i].startprice +
-            //   "</td></tr>";
-            content += " <li> <div class = 'vehicle_img' > <div a href = 'vehical-details.php?vhid=" + myObj[i].vid
 
-              +
-              "'><img src=' admin/img/vehicleimages/" + myObj[i].Vimage1 + "' alt='image'></a> </div></li>";
-            // +"div class = 'vehicle_title' >
-            //   <
-            //   h6 > < a href = "vehical-details.php?vhid=<!?php echo htmlentities($result->vid); ?>"
-            // "> <!?php echo htmlentities($result->BrandName); ?> , <!?php echo htmlentities($result->VehiclesTitle); ?></a></h6> <
-            // p > < b > From Date: < /b> <!?php echo htmlentities($result->FromDate); ?><br / > < b > To Date: < /b> <!?php echo htmlentities($result->ToDate); ?></p >
-            //   <
-            //   /div>
-            // <!?php if ($result->Status == 1) { ?>
-            //     <
-            //     div class = " vehicle_status" > < a href = "#"
-            //   class = "btn outline btn-xs active-btn" > Confirmed < /a> <
-            //   div class = "clearfix" > < /div> < /
-            //   div >
+            content += "<li style = 'float: left'> <div class = 'vehicle_img'> <a href = 'vehical-details.php?vhid=" + myObj[i].vid +
+              "'> <img src='admin/img/vehicleimages/" + myObj[i].Vimage1 + "' alt='image'></a> </div>" +
+              "<div class='vehicle_title'> <h6> <a href='vehical-details.php?vhid=" + myObj[i].vid + "'> " +
+              myObj[i].BrandName + ", " + myObj[i].VehiclesTitle +
+              " </a></h6> <p> <b> From Date: </b>" + myObj[i].FromDate + "<br/> <b> To Date: </b> " + myObj[i].ToDate +
+              "</p> </div>";
 
-            //   <1?php } else if ($result->Status == 2) { ?> <
-            //     div class = "vehicle_status" > < a href = "#"
-            //   class = "btn outline btn-xs" > Cancelled < /a> <
-            //   div class = "clearfix" > < /div> < /
-            //   div >
+            if (myObj[i].Status == 1) {
+              content += "<div class = 'vehicle_status'> <a href = '#' class = 'btn outline btn-xs active-btn'> Confirmed </a>  </div>";
 
+            } else if (myObj[i].Status == 2) {
+              content += "<div class = 'vehicle_status'> <a href = '#' class = 'btn outline btn-xs'> Cancelled </a>  </div>";
 
+            } else {
+              content += " <div class = 'vehicle_status'> <a href = '#' class = 'btn outline btn-xs'> Not Confirm yet </a> </div>";
+            }
+            content += "<div style = 'float: left'> <p> <b> Message: </b> " + myObj[i].message + " </p> </div> </li>";
 
-            //   <!?php } else { ?> <
-            //     div class = "vehicle_status" > < a href = "#"
-            //   class = "btn outline btn-xs" > Not Confirm yet < /a> <
-            //   div class = "clearfix" > < /div> < /
-            //   div >
-            //   <!?php } ?> <
-            //   div style = "float: left" >
-            //   <
-            //   p > < b > Message: < /b> <!?php echo htmlentities($result->message); ?> </p >
-            //   <
-            //   /div> < /
-            //   li > "";
           }
 
 
