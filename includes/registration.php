@@ -88,10 +88,100 @@ if (isset($_POST['signup'])) {
 
           </div>
         </div>
-      </div>
-      <div class="modal-footer text-center">
-        <p>Already got an account? <a href="#loginform" data-toggle="modal" data-dismiss="modal">Login Here</a></p>
+        <div class="modal-footer text-center">
+          <p>Already got an account? <a href="login.php" data-toggle="modal" data-dismiss="modal">Login Here</a></p>
+        </div>
       </div>
     </div>
   </div>
+
+  </body>
+
+  </html> -->
+
+  <!DOCTYPE html>
+  <html lang="en">
+
+  <head>
+    <!-- Required meta tags-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Title Page-->
+    <title>Register Forms</title>
+    <!-- CSS-->
+    <link href="../assets/css/reg.css" rel="stylesheet" media="all">
+    <!-- <link rel="stylesheet" href="../assets/css/style.css" type="text/css"> -->
+  </head>
+
+  <body>
+    <div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins">
+      <div class="wrapper wrapper--w680">
+        <div class="card card-4">
+          <div class="card-body">
+            <h2 class="title">Registration Form</h2>
+            <form method="POST" name="signup" onSubmit="return valid();">
+
+              <!-- <div class="row row-space"> -->
+              <div class="col-2">
+                <div class="input-group">
+                  <label class="label">Full name</label>
+                  <input class="input--style-4" type="text" name="fullname">
+                </div>
+              </div>
+              <!-- </div>
+                        <div class="row row-space"> -->
+              <div class="col-2">
+                <div class="input-group">
+                  <label class="label">Mobile Number</label>
+                  <div class="input-group-icon">
+                    <input class="input--style-4 js-datepicker" type="text" name="mobileno" maxlength="10" required="required">
+                    <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
+                  </div>
+                </div>
+              </div>
+              <!-- </div>
+                        <div class="row row-space"> -->
+              <div class="col-2">
+                <div class="input-group">
+                  <label class="label">Email</label>
+                  <input class="input--style-4" type="email" name="emailid" onBlur="checkAvailability()" required="required">
+                </div>
+              </div>
+              <div class="col-2">
+              </div>
+              <div class="col-2">
+                <div class="input-group">
+                  <label class="label">Password</label>
+                  <input class="input--style-4" type="text" name="Password">
+                </div>
+              </div>
+              <div class="col-2">
+                <div class="input-group">
+                  <label class="label">Confirm Password</label>
+                  <input class="input--style-4" type="text" name="confirmpassword">
+                </div>
+              </div>
+          </div>
+          <div class="form-group checkbox">
+            <input type="checkbox" id="terms_agree" required="required" checked="">
+            <label for="terms_agree">I Agree with <a href="#">Terms and Conditions</a></label>
+          </div>
+          <div class="p-t-15">
+            <input type="submit" value="Sign Up" name="signup" id="submit" class="btn btn-block">
+            <!-- <button class="btn btn--radius-2 btn--blue" type="submit" value="Sign Up" name="signup" id="submit">Submit</button> -->
+          </div>
+          </form>
+          <div class="modal-footer text-center">
+            <p>Already got an account? <a href="login.php" data-toggle="modal" data-dismiss="modal">Login Here</a></p>
+          </div>
+        </div>
+
+      </div>
+    </div>
 </div>
+
+</body>
+
+</html>
+<!-- end document-->

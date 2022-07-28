@@ -12,7 +12,8 @@ $app = new \Slim\App;
 
 $app->get('/mybookings', function (Request $request, Response $response, array $args) {
 
-    $useremail = $_SESSION['login'];
+    // $useremail = $_SESSION['login'];
+    $useremail = "1@gmail.com";
     $sql = "SELECT tblvehicles.Vimage1 as Vimage1,tblvehicles.VehiclesTitle,tblvehicles.id as vid,tblbrands.BrandName,tblbooking.FromDate,tblbooking.ToDate,tblbooking.message,tblbooking.Status  from tblbooking join tblvehicles on tblbooking.VehicleId=tblvehicles.id join tblbrands on tblbrands.id=tblvehicles.VehiclesBrand where tblbooking.userEmail=:useremail";
 
     try {
@@ -25,11 +26,38 @@ $app->get('/mybookings', function (Request $request, Response $response, array $
         $query->bindParam(':useremail', $useremail, PDO::PARAM_STR);
         $query->execute();
         $results = $query->fetchAll(PDO::FETCH_OBJ);
-        $db = null;
+
+        // $stmt = $db->query($sql);
+        // $user = $stmt->fetchAll(PDO::FETCH_OBJ);
+        // $db = null;
         echo json_encode($results);
     } catch (PDOException $e) {
-        $results = array("status" => "fail");
+        $data = array("status" => "fail");
+        echo json_encode($data);
+    }
+});
+
+$app->get('/listing', function (Request $request, Response $response, array $args) {
+
+
+
+
+    $sql = "SELECT tblvehicles.VehiclesTitle,tblbrands.BrandName,tblvehicles.PricePerDay,tblvehicles.FuelType,tblvehicles.ModelYear,tblvehicles.id,tblvehicles.SeatingCapacity,tblvehicles.VehiclesOverview,tblvehicles.Vimage1 from tblvehicles join tblbrands on tblbrands.id=tblvehicles.VehiclesBrand";
+
+    try {
+        // Get DB Objectqw
+        $db = new db();
+        // Connect
+        $db = $db->connect();
+
+        $query = $db->prepare($sql);
+        $query->execute();
+        $results = $query->fetchAll(PDO::FETCH_OBJ);
+
         echo json_encode($results);
+    } catch (PDOException $e) {
+        $data = array("status" => "fail");
+        echo json_encode($data);
     }
 });
 

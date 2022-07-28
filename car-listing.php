@@ -48,9 +48,35 @@ error_reporting(0);
 
 <body>
 
-  <!-- Start Switcher -->
-  <?php include('includes/colorswitcher.php'); ?>
-  <!-- /Switcher -->
+  <script>
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', "http://localhost/CR/api/listing", true);
+    xhr.send();
+    xhr.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        var carLists = JSON.parse(this.responseText);
+        var strList = JSON.stringify(carLists);
+
+        // $.ajax({
+        //   url: "http://localhost/CR/car-listing.php",
+        //   method: "POST",
+        //   data: {
+        //     lists: JSON.stringify(carLists)
+        //   },
+        //   success: function(data) {
+
+        //   }
+        // });
+
+
+      } else if (this.readyState == 4 && this.status == 404) {
+        alert("No data found");
+
+      }
+    };
+  </script>
+
+
 
   <!--Header-->
   <?php include('includes/header.php'); ?>
@@ -74,6 +100,7 @@ error_reporting(0);
   </section>
   <!-- /Page Header-->
 
+
   <div class="row">
 
 
@@ -81,12 +108,15 @@ error_reporting(0);
     <div class="tab-content">
       <div role="tabpanel" class="tab-pane active" id="resentnewcar">
 
-        <?php $sql = "SELECT tblvehicles.VehiclesTitle,tblbrands.BrandName,tblvehicles.PricePerDay,tblvehicles.FuelType,tblvehicles.ModelYear,tblvehicles.id,tblvehicles.SeatingCapacity,tblvehicles.VehiclesOverview,tblvehicles.Vimage1 from tblvehicles join tblbrands on tblbrands.id=tblvehicles.VehiclesBrand";
-        $query = $dbh->prepare($sql);
-        $query->execute();
-        $results = $query->fetchAll(PDO::FETCH_OBJ);
-        $cnt = 1;
-        if ($query->rowCount() > 0) {
+        <?php
+        $tst = '<script>
+        document.writeln(strList);
+      </script>';
+
+        $results = json_decode($tst);
+        $cunt = count($results);
+
+        if ($cunt > 0) {
           foreach ($results as $result) {
         ?>
 

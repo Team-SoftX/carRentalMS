@@ -1800,7 +1800,11 @@ nav.navbar {
 	max-width:80%;
 }
 
-
+#signupform{
+  border: 5px solid #FFFF00;
+  display: flex;
+  justify-content: center;
+}
 /*-----------------
 	3.12. Footer
 ------------------------*/
@@ -1912,7 +1916,11 @@ input.newsletter-input {
 	color:#fff;
 }
 
-
+.Faaq {
+  border: 5px solid #FFFF00;
+padding: 50px 0;
+margin: 500px;
+  }
 
 
 /*=======================
@@ -4058,7 +4066,7 @@ table.info-tabel tr td {
   text-align: center;
   top: 50%;
   width: 32px;
-  transform:translateY(-50%)
+  transform:translateY(-50%);
    -moz-transform:translateY(-50%);
     -o-transform:translateY(-50%);
      -webkit-transform:translateY(-50%);

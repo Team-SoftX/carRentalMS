@@ -84,135 +84,189 @@ if (strlen($_SESSION['login']) == 0) {
     </section>
     <!-- /Page Header-->
 
-    <?php
-    $useremail = $_SESSION['login'];
-    $sql = "SELECT * from tblusers where EmailId=:useremail";
-    $query = $dbh->prepare($sql);
-    $query->bindParam(':useremail', $useremail, PDO::PARAM_STR);
-    $query->execute();
-    $results = $query->fetchAll(PDO::FETCH_OBJ);
-    $cnt = 1;
-    if ($query->rowCount() > 0) {
-      foreach ($results as $result) { ?>
-        <section class="user_profile inner_pages">
+    <section class="user_profile inner_pages">
+
+      <div class="row">
+
+
+        <div class="d-flex p-2">
           <div class="container">
+            <h5 class="uppercase underline">My Booikngs </h5>
+            <div class="my_vehicles_list">
+              <ul class="vehicle_listing">
+                <?php
+                $useremail = $_SESSION['login'];
+                $sql = "SELECT tblvehicles.Vimage1 as Vimage1,tblvehicles.VehiclesTitle,tblvehicles.id as vid,tblbrands.BrandName,tblbooking.FromDate,tblbooking.ToDate,tblbooking.message,tblbooking.Status  from tblbooking join tblvehicles on tblbooking.VehicleId=tblvehicles.id join tblbrands on tblbrands.id=tblvehicles.VehiclesBrand where tblbooking.userEmail=:useremail";
+                $query = $dbh->prepare($sql);
+                $query->bindParam(':useremail', $useremail, PDO::PARAM_STR);
+                $query->execute();
+                $results = $query->fetchAll(PDO::FETCH_OBJ);
 
 
+                if ($query->rowCount() > 0) {
+                  foreach ($results as $result) {
 
+                ?>
 
-
-
-        <?php
-      }
-    } ?></p>
-
-          </div>
-          <div class="row">
-
-
-            <div class="d-flex p-2">
-              <div class="container">
-                <h5 class="uppercase underline">My Booikngs </h5>
-                <div class="my_vehicles_list">
-                  <ul class="vehicle_listing">
-                    <?php
-                    $useremail = $_SESSION['login'];
-                    $sql = "SELECT tblvehicles.Vimage1 as Vimage1,tblvehicles.VehiclesTitle,tblvehicles.id as vid,tblbrands.BrandName,tblbooking.FromDate,tblbooking.ToDate,tblbooking.message,tblbooking.Status  from tblbooking join tblvehicles on tblbooking.VehicleId=tblvehicles.id join tblbrands on tblbrands.id=tblvehicles.VehiclesBrand where tblbooking.userEmail=:useremail";
-                    $query = $dbh->prepare($sql);
-                    $query->bindParam(':useremail', $useremail, PDO::PARAM_STR);
-                    $query->execute();
-                    $results = $query->fetchAll(PDO::FETCH_OBJ);
-                    $cnt = 1;
-                    if ($query->rowCount() > 0) {
-                      foreach ($results as $result) {  ?>
-
-                        <li>
-                          <div class="vehicle_img"> <a href="vehical-details.php?vhid=<?php echo htmlentities($result->vid); ?>""><img src=" admin/img/vehicleimages/<?php echo htmlentities($result->Vimage1); ?>" alt="image" style=""></a> </div>
-                          <div class="vehicle_title">
-                            <h6><a href="vehical-details.php?vhid=<?php echo htmlentities($result->vid); ?>""> <?php echo htmlentities($result->BrandName); ?> , <?php echo htmlentities($result->VehiclesTitle); ?></a></h6>
-                  <p><b>From Date:</b> <?php echo htmlentities($result->FromDate); ?><br /> <b>To Date:</b> <?php echo htmlentities($result->ToDate); ?></p>
-                </div>
-                <?php if ($result->Status == 1) { ?>
-                <div class=" vehicle_status"> <a href="#" class="btn outline btn-xs active-btn">Confirmed</a>
-                                <div class="clearfix"></div>
-                          </div>
-
-                        <?php } else if ($result->Status == 2) { ?>
-                          <div class="vehicle_status"> <a href="#" class="btn outline btn-xs">Cancelled</a>
+                    <li>
+                      <div class="vehicle_img"> <a href="vehical-details.php?vhid=<?php echo htmlentities($result->vid); ?>"><img src=" admin/img/vehicleimages/<?php echo htmlentities($result->Vimage1); ?>" alt="image"></a> </div>
+                      <div class="vehicle_title">
+                        <h6><a href="vehical-details.php?vhid=<?php echo htmlentities($result->vid); ?>""> <?php echo htmlentities($result->BrandName); ?> , <?php echo htmlentities($result->VehiclesTitle); ?></a></h6>
+                         <p><b>From Date:</b> <?php echo htmlentities($result->FromDate); ?><br /> <b>To Date:</b> <?php echo htmlentities($result->ToDate); ?></p>
+                      </div>
+                      
+                  <?php if ($result->Status == 1) { ?>
+                      <div class=" vehicle_status"> <a href="#" class="btn outline btn-xs active-btn">Confirmed</a>
                             <div class="clearfix"></div>
-                          </div>
+                      </div>
+
+                    <?php } else if ($result->Status == 2) { ?>
+                      <div class="vehicle_status"> <a href="#" class="btn outline btn-xs">Cancelled</a>
+                        <div class="clearfix"></div>
+                      </div>
 
 
 
-                        <?php } else { ?>
-                          <div class="vehicle_status"> <a href="#" class="btn outline btn-xs">Not Confirm yet</a>
-                            <div class="clearfix"></div>
-                          </div>
-                        <?php } ?>
-                        <div style="float: left">
-                          <p><b>Message:</b> <?php echo htmlentities($result->message); ?> </p>
-                        </div>
-                        </li>
-                    <?php }
-                    } ?>
+                    <?php } else { ?>
+                      <div class="vehicle_status"> <a href="#" class="btn outline btn-xs">Not Confirm yet</a>
+                        <div class="clearfix"></div>
+                      </div>
+                    <?php } ?>
+                    <div style="float: left">
+                      <p><b>Message:</b> <?php echo htmlentities($result->message); ?> </p>
+                    </div>
+                    </li>
+                <?php }
+                } ?>
 
 
-                  </ul>
-                </div>
-              </div>
+              </ul>
+
+
+              <ul id="vehicle_listing1">
+
+              </ul>
             </div>
-
           </div>
-        </section>
-        <!--/my-vehicles-->
-        <?php include('includes/footer.php'); ?>
+        </div>
 
-        <!-- Scripts -->
-        <script src="assets/js/jquery.min.js"></script>
-        <script src="assets/js/bootstrap.min.js"></script>
-        <script src="assets/js/interface.js"></script>
-        <!--Switcher-->
-        <script src="assets/switcher/js/switcher.js"></script>
-        <!--bootstrap-slider-JS-->
-        <script src="assets/js/bootstrap-slider.min.js"></script>
-        <!--Slider-JS-->
-        <script src="assets/js/slick.min.js"></script>
-        <script src="assets/js/owl.carousel.min.js"></script>
+      </div>
+    </section>
+    <!--/my-vehicles-->
+    <?php include('includes/footer.php'); ?>
+
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/interface.js"></script>
+    <!--Switcher-->
+    <script src="assets/switcher/js/switcher.js"></script>
+    <!--bootstrap-slider-JS-->
+    <script src="assets/js/bootstrap-slider.min.js"></script>
+    <!--Slider-JS-->
+    <script src="assets/js/slick.min.js"></script>
+    <script src="assets/js/owl.carousel.min.js"></script>
 
 
 
-        <script>
-          //get data by ajax
-          $.ajax({
-            url: "http://localhost/thewhoa/api/antiqueitems",
-            type: "GET",
-            //dataType: "json",
-            success: function(data) {
-              var json = data;
-              var obj = JSON.parse(json);
-              console.log(data);
-              buildTable(obj);
-            }
-          });
+    <script>
+      //get data by ajax
+      // $.ajax({
+      //   url: "http://localhost/CR/api/mybookings",
+      //   type: "GET",
+      //   //dataType: "json",
+      //   success: function(data) {
+      //     var json = data;
+      //     var obj = JSON.parse(json);
+      //     console.log(data);
+      //     buildTable(obj);
+      //   }
+      // });
 
-          function buildTable(obj) {
-            var table = document.getElementById('myTable')
+      // function buildTable(obj) {
+      //   var table = document.getElementById('vehicle_listing1')
 
-            for (var i = 0; i < obj.length; i++) {
-              var row = `<tr>
-                                <td>${obj[i].num}</td>
-                                <td>${obj[i].itemid}</td>
-                                <td>${obj[i].description}</td>
-                                <td>${obj[i].category}</td>
-                                <td>${obj[i].startprice}</td>
+      //   for (var i = 0; i < obj.length; i++) {
+      //     var row = "<li>ddsdf </li>"
+      //     table.innerHTML += row
 
-                          </tr>`
-              table.innerHTML += row
+      //   }
 
-            }
+      // }
 
+      var xht = new XMLHttpRequest();
+      // step2
+      xht.open("GET", "http://localhost/CR/api/mybookings", true);
+      // step3
+      xht.send();
+      //step4 -we do the processing upon receiving the response with sta
+      xht.onreadystatechange = function(data) {
+        const myObj = JSON.parse(this.responseText);
+        if (this.readyState == 4 && this.status == 200) {
+
+          var content = "dsfdf";
+
+          for (let i = 0; i < myObj.length; i++) {
+            // content +=
+            //   "<tr><td>" +
+            //   myObj[i].itemid +
+            //   "</td>" +
+            //   "<td>" +
+            //   myObj[i].description +
+            //   "</td>" +
+            //   "<td>" +
+            //   myObj[i].category +
+            //   "</td>" +
+            //   "<td>" +
+            //   myObj[i].startprice +
+            //   "</td></tr>";
+            content += " <li> <div class = 'vehicle_img' > <div a href = 'vehical-details.php?vhid=" + myObj[i].vid
+
+              +
+              "'><img src=' admin/img/vehicleimages/" + myObj[i].Vimage1 + "' alt='image'></a> </div></li>";
+            // +"div class = 'vehicle_title' >
+            //   <
+            //   h6 > < a href = "vehical-details.php?vhid=<!?php echo htmlentities($result->vid); ?>"
+            // "> <!?php echo htmlentities($result->BrandName); ?> , <!?php echo htmlentities($result->VehiclesTitle); ?></a></h6> <
+            // p > < b > From Date: < /b> <!?php echo htmlentities($result->FromDate); ?><br / > < b > To Date: < /b> <!?php echo htmlentities($result->ToDate); ?></p >
+            //   <
+            //   /div>
+            // <!?php if ($result->Status == 1) { ?>
+            //     <
+            //     div class = " vehicle_status" > < a href = "#"
+            //   class = "btn outline btn-xs active-btn" > Confirmed < /a> <
+            //   div class = "clearfix" > < /div> < /
+            //   div >
+
+            //   <1?php } else if ($result->Status == 2) { ?> <
+            //     div class = "vehicle_status" > < a href = "#"
+            //   class = "btn outline btn-xs" > Cancelled < /a> <
+            //   div class = "clearfix" > < /div> < /
+            //   div >
+
+
+
+            //   <!?php } else { ?> <
+            //     div class = "vehicle_status" > < a href = "#"
+            //   class = "btn outline btn-xs" > Not Confirm yet < /a> <
+            //   div class = "clearfix" > < /div> < /
+            //   div >
+            //   <!?php } ?> <
+            //   div style = "float: left" >
+            //   <
+            //   p > < b > Message: < /b> <!?php echo htmlentities($result->message); ?> </p >
+            //   <
+            //   /div> < /
+            //   li > "";
           }
-        </script>
+
+
+          document.getElementById("vehicle_listing1").innerHTML = content;
+        } else if (this.readyState == 4 && this.status == 404) {
+          alert(this.status + "<br>resource not found");
+        }
+      };
+    </script>
 
   </body>
 
