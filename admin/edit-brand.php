@@ -82,7 +82,7 @@ if (strlen($_SESSION['alogin']) == 0) {
 					<div class="row">
 						<div class="col-md-12">
 
-							<h2 class="page-title">Create Brand</h2>
+							<h2 class="page-title">Edit Brand</h2>
 
 							<div class="row">
 								<div class="col-md-10">

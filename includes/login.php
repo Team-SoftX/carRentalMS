@@ -1,4 +1,9 @@
 <?php
+
+require('config.php'); ?>
+<?php
+
+
 if (isset($_POST['login'])) {
   $email = $_POST['email'];
   $password = md5($_POST['password']);
@@ -10,8 +15,10 @@ if (isset($_POST['login'])) {
   $results = $query->fetchAll(PDO::FETCH_OBJ);
   if ($query->rowCount() > 0) {
     $_SESSION['login'] = $_POST['email'];
-    $_SESSION['fname'] = $results->FullName;
-    $currentpage = $_SERVER['REQUEST_URI'];
+    $_SESSION['fname'] = "dfdsfsdf";
+    // $currentpage = $_SERVER['REQUEST_URI'];
+    $currentpage = '../car-listing.php';
+    // echo "<script type='text/javascript'> document.location = 'car-listing.php'; </script>";
     echo "<script type='text/javascript'> document.location = '$currentpage'; </script>";
   } else {
     echo "<script>alert('Invalid Details');</script>";

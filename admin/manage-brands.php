@@ -5,6 +5,30 @@ include('includes/config.php');
 if (strlen($_SESSION['alogin']) == 0) {
 	header('location:index.php');
 } else {
+	// Code for change password	
+	if (isset($_POST['submit'])) {
+		$brand = $_POST['brand'];
+		$sql = "INSERT INTO  tblbrands(BrandName) VALUES(:brand)";
+		$query = $dbh->prepare($sql);
+		$query->bindParam(':brand', $brand, PDO::PARAM_STR);
+		$query->execute();
+		$lastInsertId = $dbh->lastInsertId();
+		if ($lastInsertId) {
+			$msg = "Brand Created successfully";
+		} else {
+			$error = "Something went wrong. Please try again";
+		}
+	}
+}
+?>
+
+<?php
+session_start();
+error_reporting(0);
+include('includes/config.php');
+if (strlen($_SESSION['alogin']) == 0) {
+	header('location:index.php');
+} else {
 	if (isset($_GET['del'])) {
 		$id = $_GET['del'];
 		$sql = "delete from tblbrands  WHERE id=:id";
@@ -83,6 +107,7 @@ if (strlen($_SESSION['alogin']) == 0) {
 							<h2 class="page-title">Manage Brands</h2>
 
 							<!-- Zero Configuration Table -->
+
 
 							<?php if ($error) { ?><div class=""><strong>ERROR</strong>:<?php echo htmlentities($error); ?> </div><?php } else if ($msg) { ?><div class="succWrap"><strong>SUCCESS</strong>:<?php echo htmlentities($msg); ?> </div><?php } ?>
 							<table class="table table-border" cellspacing="0" width="100%">

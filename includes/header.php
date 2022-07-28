@@ -11,7 +11,7 @@
 
             <?php if (strlen($_SESSION['login']) == 0) {
             ?>
-              <div class="login_btn"> <a href="#loginform" class="btn btn-xs uppercase" data-toggle="modal" data-dismiss="modal">Login / Register</a> </div>
+              <div class="login_btn"> <a href="includes/login.php" class="btn btn-xs uppercase" data-toggle="modal" data-dismiss="modal">Login / Register</a> </div>
               <div class="login_btn"> <a href="admin/" class="btn btn-xs uppercase" data-toggle="modal" data-dismiss="modal">Admin Login</a> </div>
 
             <?php } else {
