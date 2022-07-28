@@ -178,6 +178,42 @@ if (strlen($_SESSION['login']) == 0) {
         <!--Slider-JS-->
         <script src="assets/js/slick.min.js"></script>
         <script src="assets/js/owl.carousel.min.js"></script>
+
+
+
+        <script>
+          //get data by ajax
+          $.ajax({
+            url: "http://localhost/thewhoa/api/antiqueitems",
+            type: "GET",
+            //dataType: "json",
+            success: function(data) {
+              var json = data;
+              var obj = JSON.parse(json);
+              console.log(data);
+              buildTable(obj);
+            }
+          });
+
+          function buildTable(obj) {
+            var table = document.getElementById('myTable')
+
+            for (var i = 0; i < obj.length; i++) {
+              var row = `<tr>
+                                <td>${obj[i].num}</td>
+                                <td>${obj[i].itemid}</td>
+                                <td>${obj[i].description}</td>
+                                <td>${obj[i].category}</td>
+                                <td>${obj[i].startprice}</td>
+
+                          </tr>`
+              table.innerHTML += row
+
+            }
+
+          }
+        </script>
+
   </body>
 
   </html>
