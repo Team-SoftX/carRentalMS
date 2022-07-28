@@ -61,7 +61,7 @@
 
           <li><a href="car-listing.php">Car Listing</a>
           <li><a href="my-booking.php">My Booking</a></li>
-          <li><a href="page.php?type=aboutus">About Us</a></li>
+
 
           <li><a href="contact-us.php">Contact Us</a></li>
 

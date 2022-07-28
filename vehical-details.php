@@ -216,9 +216,7 @@ if (isset($_POST['submit'])) {
       <div id="back-top" class="back-top"> <a href="#top"><i class="fa fa-angle-up" aria-hidden="true"></i> </a> </div>
       <!--/Back to top-->
 
-      <!--Login-Form -->
-      <?php include('includes/login.php'); ?>
-      <!--/Login-Form -->
+
 
       <!--Register-Form -->
       <?php include('includes/registration.php'); ?>
