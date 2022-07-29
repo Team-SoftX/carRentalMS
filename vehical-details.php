@@ -218,13 +218,6 @@ if (isset($_POST['submit'])) {
 
 
 
-      <!--Register-Form -->
-      <?php include('includes/registration.php'); ?>
-
-      <!--/Register-Form -->
-
-      <!--Forgot-password-Form -->
-      <?php include('includes/forgotpassword.php'); ?>
 
       <script src="assets/js/jquery.min.js"></script>
       <script src="assets/js/bootstrap.min.js"></script>

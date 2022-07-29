@@ -97,7 +97,7 @@ if (strlen($_SESSION['alogin']) == 0) {
 
 		<script>
 			var xhr = new XMLHttpRequest();
-			xhr.open('GET', 'http://localhost/carRentalMS/api/brands', true);
+			xhr.open('GET', 'http://localhost/CR/api/brands', true);
 			xhr.send();
 			xhr.onreadystatechange = function(event) {
 
@@ -110,15 +110,15 @@ if (strlen($_SESSION['alogin']) == 0) {
 					content = "";
 					for (let i = 0; i < brands.length; i++) {
 
-						content += "<tr>"+
-												"<td>"+ (i+1)+"</td>"+
-												"<td>"+brands[i].BrandName+"</td>"+
-												"<td>"+brands[i].CreationDate+"</td>"+
-												"<td>"+brands[i].UpdationDate+"</td>"+
-												"<td><a href='edit-brand.php?id="+brands[i].id+"'><i class='fa fa-edit'></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
-													"<a href='manage-brands.php?del="+brands[i].id+"' onclick='return confirm(' Do you want to delete');'><i class='fa fa-trash'></i></a>"+
-												"</td>"+
-											"</tr>";
+						content += "<tr>" +
+							"<td>" + (i + 1) + "</td>" +
+							"<td>" + brands[i].BrandName + "</td>" +
+							"<td>" + brands[i].CreationDate + "</td>" +
+							"<td>" + brands[i].UpdationDate + "</td>" +
+							"<td><a href='edit-brand.php?id=" + brands[i].id + "'><i class='fa fa-edit'></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" +
+							"<a href='manage-brands.php?del=" + brands[i].id + "' onclick='return confirm(' Do you want to delete');'><i class='fa fa-trash'></i></a>" +
+							"</td>" +
+							"</tr>";
 
 					}
 					document.getElementById('barnds').innerHTML = content;
@@ -162,7 +162,7 @@ if (strlen($_SESSION['alogin']) == 0) {
 
 								<tbody id='barnds'>
 
-									
+
 
 								</tbody>
 							</table>

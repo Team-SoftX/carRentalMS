@@ -34,19 +34,7 @@
         <div class="user_login">
           <ul>
 
-            <?php
-            $email = $_SESSION['login'];
-            $sql = "SELECT FullName FROM tblusers WHERE EmailId=:email ";
-            $query = $dbh->prepare($sql);
-            $query->bindParam(':email', $email, PDO::PARAM_STR);
-            $query->execute();
-            $results = $query->fetchAll(PDO::FETCH_OBJ);
-            if ($query->rowCount() > 0) {
-              foreach ($results as $result) {
 
-                echo htmlentities($result->FullName);
-              }
-            } ?></a>
 
 
           </ul>
