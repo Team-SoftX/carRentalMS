@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 29, 2022 at 04:21 PM
+-- Generation Time: Jul 29, 2022 at 06:39 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.1
 
@@ -68,7 +68,8 @@ INSERT INTO `tblbooking` (`id`, `userEmail`, `VehicleId`, `FromDate`, `ToDate`, 
 (2, 'test@gmail.com', 3, '30/06/2017', '02/07/2017', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco', 2, '2017-06-26 20:15:43'),
 (3, 'test@gmail.com', 4, '02/07/2017', '07/07/2017', 'Lorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ', 0, '2017-06-26 21:10:06'),
 (4, '1@gmail.com', 3, '12', '13', '23', 2, '2022-07-27 13:10:25'),
-(5, '1@gmail.com', 3, '12', '323', '3dw', 2, '2022-07-27 14:44:09');
+(5, '1@gmail.com', 3, '12', '323', '3dw', 2, '2022-07-27 14:44:09'),
+(6, '1@gmail.com', 6, '12', '13', 'zsdfghjkl;\'', 1, '2022-07-29 14:29:23');
 
 -- --------------------------------------------------------
 
@@ -95,8 +96,7 @@ INSERT INTO `tblbrands` (`id`, `BrandName`, `CreationDate`, `UpdationDate`) VALU
 (5, 'Toyota', '2017-06-18 16:25:24', NULL),
 (7, 'Marutiu', '2017-06-19 06:22:13', NULL),
 (8, 'Royal', '2022-07-27 14:31:03', NULL),
-(9, 'Shafa', '2022-07-28 10:51:07', NULL),
-(12, 'Royal', '2022-07-28 10:56:53', NULL);
+(9, 'Shafa', '2022-07-28 10:51:07', NULL);
 
 -- --------------------------------------------------------
 
@@ -220,13 +220,13 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `tblbooking`
 --
 ALTER TABLE `tblbooking`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `tblbrands`
 --
 ALTER TABLE `tblbrands`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `tblusers`
@@ -238,7 +238,7 @@ ALTER TABLE `tblusers`
 -- AUTO_INCREMENT for table `tblvehicles`
 --
 ALTER TABLE `tblvehicles`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
