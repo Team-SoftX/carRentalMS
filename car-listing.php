@@ -49,46 +49,43 @@ error_reporting(0);
 <body>
 
   <script>
-    
-
-    
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'http://localhost/carRentalMS/api/listing', true);
+    xhr.open('GET', 'http://localhost/CR/api/listing', true);
     xhr.send();
-    
+
     xhr.onreadystatechange = function(event) {
-      
+
       if (this.readyState == 4 && this.status == 200) {
 
 
         var carLists = JSON.parse(this.responseText);
         var strList = JSON.stringify(carLists);
-        
-        content="";
-        for(let i=0;i<carLists.length;i++){
 
-          content+="<div class='col-list-3'>"+
-          "<div class='recent-car-list'>"+
-          "<div class='car-info-box'> <a href='vehical-details.php?vhid=" + carLists[i].id + "'><img src='admin/img/vehicleimages/"+carLists[i].Vimage1+"' class='img-responsive' alt='image'></a>"+
-                  "<ul>"+
-                    "<li><i class='fa fa-car' aria-hidden='true'></i>"+carLists[i].FuelType+"</li>"+
-                    "<li><i class='fa fa-calendar' aria-hidden='true'></i>"+carLists[i].ModelYear+" Model</li>"+
-                    "<li><i class='fa fa-user' aria-hidden='true'></i>"+carLists[i].SeatingCapacity+" seats</li>"+
-                  "</ul>"+
-                "</div>"+
-                "<div class='car-title-m'>"+
-                  "<h6><a href='vehical-details.php?vhid="+carLists[i].id+"'>"+carLists[i].BrandName+" ,"+ carLists[i].VehiclesTitle+"</a></h6>"+
-                  "<span class='price'>$"+carLists[i].PricePerDay+" /Day</span>"+
-                "</div>"+
-                "<div class='inventory_info_m'>"+
-                  "<p>"+carLists[i].VehiclesOverview+"</p>"+
-                "</div>"+
-              "</div>"+
+        content = "";
+        for (let i = 0; i < carLists.length; i++) {
+
+          content += "<div class='col-list-3'>" +
+            "<div class='recent-car-list'>" +
+            "<div class='car-info-box'> <a href='vehical-details.php?vhid=" + carLists[i].id + "'><img src='admin/img/vehicleimages/" + carLists[i].Vimage1 + "' class='img-responsive' alt='image'></a>" +
+            "<ul>" +
+            "<li><i class='fa fa-car' aria-hidden='true'></i>" + carLists[i].FuelType + "</li>" +
+            "<li><i class='fa fa-calendar' aria-hidden='true'></i>" + carLists[i].ModelYear + " Model</li>" +
+            "<li><i class='fa fa-user' aria-hidden='true'></i>" + carLists[i].SeatingCapacity + " seats</li>" +
+            "</ul>" +
+            "</div>" +
+            "<div class='car-title-m'>" +
+            "<h6><a href='vehical-details.php?vhid=" + carLists[i].id + "'>" + carLists[i].BrandName + " ," + carLists[i].VehiclesTitle + "</a></h6>" +
+            "<span class='price'>$" + carLists[i].PricePerDay + " /Day</span>" +
+            "</div>" +
+            "<div class='inventory_info_m'>" +
+            "<p>" + carLists[i].VehiclesOverview + "</p>" +
+            "</div>" +
+            "</div>" +
             "</div>";
 
         }
-        document.getElementById('resentnewcar').innerHTML=content;
-        
+        document.getElementById('resentnewcar').innerHTML = content;
+
 
 
       } else if (this.readyState == 4 && this.status == 404) {
@@ -124,19 +121,19 @@ error_reporting(0);
 
 
 
-<!-- <div id="testing">
+  <!-- <div id="testing">
 <?php $very = '<script>document.writeln(str)</script>' ?>
   <p id><?php echo $very ?></p>
 </div> -->
 
-  <div class='row' >
+  <div class='row'>
 
 
     <!-- Recently Listed New Cars -->
     <div class='tab-content'>
       <div role='tabpanel' class='tab-pane active' id='resentnewcar'>
 
-        
+
 
       </div>
     </div>
