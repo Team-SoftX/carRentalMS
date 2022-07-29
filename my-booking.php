@@ -214,17 +214,16 @@ if (strlen($_SESSION['login']) == 0) {
               "'> <img src='admin/img/vehicleimages/" + myObj[i].Vimage1 + "' alt='image'></a> </div>" +
               "<div class='vehicle_title'> <h6> <a href='vehical-details.php?vhid=" + myObj[i].vid + "'> " +
               myObj[i].BrandName + ", " + myObj[i].VehiclesTitle +
-              " </a></h6> <p> <b> From Date: </b>" + myObj[i].FromDate + "<br/> <b> To Date: </b> " + myObj[i].ToDate +
-              "</p> </div>";
+              " </a></h6> <p> <b> From Date: </b>" + myObj[i].FromDate + "<br/> <b> To Date: </b> " + myObj[i].ToDate + "</p> </div>";
 
             if (myObj[i].Status == 1) {
-              content += "<div class = 'vehicle_status'> <a href = '#' class = 'btn outline btn-xs active-btn'> Confirmed </a>  </div>";
+              content += "<div class = 'vehicle_status'> <a href ='#' class = 'btn outline btn-xs active-btn'> Confirmed </a>  </div>";
 
             } else if (myObj[i].Status == 2) {
-              content += "<div class = 'vehicle_status'> <a href = '#' class = 'btn outline btn-xs'> Cancelled </a>  </div>";
+              content += "<div class = 'vehicle_status'> <a href ='#' class = 'btn outline btn-xs'> Cancelled </a>  </div>";
 
             } else {
-              content += " <div class = 'vehicle_status'> <a href = '#' class = 'btn outline btn-xs'> Not Confirm yet </a> </div>";
+              content += "<div class = 'vehicle_status'> <a href ='#' class = 'btn outline btn-xs'> Not Confirm yet </a> </div>";
             }
             content += "<div style = 'float: left'> <p> <b> Message: </b> " + myObj[i].message + " </p> </div> </li>";
 
