@@ -178,13 +178,13 @@ if (isset($_POST['signup'])) {
             <div class="col-2">
               <div class="input-group">
                 <label class="label">Password</label>
-                <input class="input--style-4" type="text" name="Password">
+                <input class="input--style-4" type="password" name="Password">
               </div>
             </div>
             <div class="col-2">
               <div class="input-group">
                 <label class="label">Confirm Password</label>
-                <input class="input--style-4" type="text" name="confirmpassword">
+                <input class="input--style-4" type="password" name="confirmpassword">
               </div>
             </div>
         </div>
