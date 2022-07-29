@@ -6,7 +6,7 @@ if (isset($_POST['signup'])) {
   $mobile = $_POST['mobileno'];
   $password = md5($_POST['password']);
   $sql = "INSERT INTO  tblusers(FullName,EmailId,ContactNo,Password) VALUES(:fname,:email,:mobile,:password)";
-  $query = $dbh->prepare($sql);
+  $query = $db->prepare($sql);
   $query->bindParam(':fname', $fname, PDO::PARAM_STR);
   $query->bindParam(':email', $email, PDO::PARAM_STR);
   $query->bindParam(':mobile', $mobile, PDO::PARAM_STR);
@@ -178,7 +178,7 @@ if (isset($_POST['signup'])) {
             <div class="col-2">
               <div class="input-group">
                 <label class="label">Password</label>
-                <input class="input--style-4" type="password" name="Password">
+                <input class="input--style-4" type="password" name="password">
               </div>
             </div>
             <div class="col-2">
