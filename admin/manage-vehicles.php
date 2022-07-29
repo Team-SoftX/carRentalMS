@@ -181,38 +181,12 @@
 								</thead>
 
 								<tbody>
+								<tbody id="tbody">
 
-									<?php $sql = "SELECT tblvehicles.VehiclesTitle,tblbrands.BrandName,tblvehicles.PricePerDay,tblvehicles.FuelType,tblvehicles.ModelYear,tblvehicles.id from tblvehicles join tblbrands on tblbrands.id=tblvehicles.VehiclesBrand";
-									$query = $dbh->prepare($sql);
-									$query->execute();
-									$results = $query->fetchAll(PDO::FETCH_OBJ);
-									$cnt = 1;
-									if ($query->rowCount() > 0) {
-										foreach ($results as $result) {				?>
-											<tr>
-												<td><?php echo htmlentities($cnt); ?></td>
-												<td><?php echo htmlentities($result->VehiclesTitle); ?></td>
-												<td><?php echo htmlentities($result->BrandName); ?></td>
-												<td><?php echo htmlentities($result->PricePerDay); ?></td>
-												<td><?php echo htmlentities($result->FuelType); ?></td>
-												<td><?php echo htmlentities($result->ModelYear); ?></td>
-												<td><a href="edit-vehicle.php?id=<?php echo $result->id; ?>"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-													<a href="manage-vehicles.php?del=<?php echo $result->id; ?>" onclick="return confirm('Do you want to delete');"><i class="fa fa-close"></i></a>
-												</td>
-											</tr>
-									<?php $cnt = $cnt + 1;
-										}
-									} ?>
+
 
 								</tbody>
 							</table>
-
-
-
-
-
-
-
 
 						</div>
 					</div>
@@ -226,7 +200,7 @@
 							<?php if ($error) { ?><div class="errorWrap"><strong>ERROR</strong>:<?php echo htmlentities($error); ?> </div><?php } else if ($msg) { ?><div class="succWrap"><strong>SUCCESS</strong>:<?php echo htmlentities($msg); ?> </div><?php } ?>
 
 							<div class="panel-body">
-								<form method="post" class="form-horizontal" enctype="multipart/form-data">
+								<form id="addpatient" method="post" class="form-horizontal" enctype="multipart/form-data">
 									<div class="form-group">
 										<label class="col-sm-2 control-label">Vehicle Title<span style="color:red">*</span></label>
 										<div class="col-sm-4">
@@ -437,7 +411,7 @@
 				<script>
 					var xht = new XMLHttpRequest();
 					// step2
-					xht.open("GET", "http://localhost/CR/api/managebookings", true);
+					xht.open("GET", "http://localhost/CR/api/vehicles", true);
 					// step3
 					xht.send();
 					//step4 -we do the processing upon receiving the response with sta
@@ -454,47 +428,57 @@
 									(i + 1) +
 									"</td>" +
 									"<td>" +
-									myObj[i].FullName +
+									myObj[i].VehiclesTitle +
 									"</td>" +
-									"<td><a href='edit-vehicle.php?id=" + myObj[i].vid + "'>" +
+									"<td>" +
 									myObj[i].BrandName +
-									" , " + myObj[i].VehiclesTitle +
 									"</td>" +
 									"<td>" +
-									myObj[i].FromDate +
+									myObj[i].PricePerDay +
 									"</td>" +
 									"<td>" +
-									myObj[i].ToDate +
+									myObj[i].FuelType +
 									"</td>" +
 									"<td>" +
-									myObj[i].message +
-									"</td>";
-
-								if (myObj[i].Status == 0) {
-									content += "<td> Not Confirmed yet </td>";
-
-								} else if (myObj[i].Status == 1) {
-									content += "<td> Confirmed </td>";
-
-								} else {
-									content += "<td> Cancelled </td>";
-
-								}
-								content +=
-									"<td>" +
-									myObj[i].PostingDate +
+									myObj[i].ModelYear +
 									"</td>" +
-									"<td><a href='manage-bookings.php?aeid=" + myObj[i].id + "' onclick ='return confirm('Do you really want to Confirm this booking')'> Confirm </a> /" +
-									" <a href='manage-bookings.php?eid=" + myObj[i].id + "' onclick='return confirm('Do you really want to Cancel this Booking')'> Cancel</a>" +
+									"<td><a href='edit-vehicle.php?id=" + myObj[i].id + "'> <i class='fa fa-edit'></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" +
+									" <a href='manage-vehicles.php?del=" + myObj[i].id + "' onclick='return confirm('Do you want to delete');'> <i class='fa fa-close'></i></a>" +
 									"</td></tr>";
 							}
 
 
-							document.getElementById("tablebody").innerHTML = content;
+							document.getElementById("tbody").innerHTML = content;
 						} else if (this.readyState == 4 && this.status == 404) {
 							alert(this.status + "<br>resource not found");
 						}
 					};
+
+					$("#addpatient").submit(function(event) {
+						event.preventDefault();
+						//use this technique for ajax data if not using RESTFul
+						//NOTE: this will capture the name attribute (not id) in our form
+						var formData = $(this).serialize();
+						console.log(formData); // check using console to make sure all the form data values are correctly serialized
+
+						$.ajax({
+							type: "POST",
+							url: "http://localhost/CR/api/vehicle",
+							data: formData,
+							dataType: "json",
+
+							success: function(data, status, xhr) {
+								if (data.rowcount > 0) {
+									alert("Ok, successfully inserted data");
+								} else {
+									alert("fail to update, " + data.errormessage);
+								}
+							},
+							error: function(xhr, resp, text) {
+								alert("error " + xhr + ", " + resp + ", " + text);
+							},
+						});
+					});
 				</script>
 
 				<!-- Loading Scripts -->
