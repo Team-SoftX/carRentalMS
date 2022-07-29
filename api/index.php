@@ -213,10 +213,11 @@ $app->post('/vehicle', function (Request $request, Response $response, array $ar
 
     try {
 
+        $sql = "INSERT INTO tblvehicles(VehiclesTitle,VehiclesBrand,VehiclesOverview,PricePerDay,FuelType,ModelYear,SeatingCapacity,Vimage1,Vimage2,Vimage3,Vimage4,Vimage5,AirConditioner,PowerDoorLocks,AntiLockBrakingSystem,BrakeAssist,PowerSteering,DriverAirbag,PassengerAirbag,PowerWindows,CDPlayer,CentralLocking,CrashSensor,LeatherSeats) VALUES(:vehicletitle,:brand,:vehicleoverview,:priceperday,:fueltype,:modelyear,:seatingcapacity,:vimage1,:vimage2,:vimage3,:vimage4,:vimage5,:airconditioner,:powerdoorlocks,:antilockbrakingsys,:brakeassist,:powersteering,:driverairbag,:passengerairbag,:powerwindow,:cdplayer,:centrallocking,:crashcensor,:leatherseats)";
+        // Get DB Objectqw
         $db = new db();
         // Connect
         $db = $db->connect();
-        $sql = "INSERT INTO tblvehicles(VehiclesTitle,VehiclesBrand,VehiclesOverview,PricePerDay,FuelType,ModelYear,SeatingCapacity,Vimage1,Vimage2,Vimage3,Vimage4,Vimage5,AirConditioner,PowerDoorLocks,AntiLockBrakingSystem,BrakeAssist,PowerSteering,DriverAirbag,PassengerAirbag,PowerWindows,CDPlayer,CentralLocking,CrashSensor,LeatherSeats) VALUES(:vehicletitle,:brand,:vehicleoverview,:priceperday,:fueltype,:modelyear,:seatingcapacity,:vimage1,:vimage2,:vimage3,:vimage4,:vimage5,:airconditioner,:powerdoorlocks,:antilockbrakingsys,:brakeassist,:powersteering,:driverairbag,:passengerairbag,:powerwindow,:cdplayer,:centrallocking,:crashcensor,:leatherseats)";
         $query = $db->prepare($sql);
         $query->bindParam(':vehicletitle', $vehicletitle, PDO::PARAM_STR);
         $query->bindParam(':brand', $brand, PDO::PARAM_STR);
@@ -243,7 +244,7 @@ $app->post('/vehicle', function (Request $request, Response $response, array $ar
         $query->bindParam(':crashcensor', $crashcensor, PDO::PARAM_STR);
         $query->bindParam(':leatherseats', $leatherseats, PDO::PARAM_STR);
         $query->execute();
-
+        $lastInsertId = $db->lastInsertId();
         $db = null;
         $count = $query->rowCount();
         $data = array("status" => "success", "rowcount" => $count);
@@ -256,33 +257,23 @@ $app->post('/vehicle', function (Request $request, Response $response, array $ar
 });
 
 
-$app->put('/bid/{bidder_id}', function (Request $request, Response $response, array $args) {
-    $id = $args['bidder_id'];
+$app->put('/brand/{brand_id}', function (Request $request, Response $response, array $args) {
+    $id = $args['brand_id'];
 
 
-    $biddername = $_POST["biddername"];
-    $contactnum = $_POST["contactnum"];
-    $mybidprice = $_POST["mybidprice"];
-    $itemid = $_POST["itemid"];
-    $description = $_POST["description"];
-    $category = $_POST["category"];
-    $startprice = $_POST["startprice"];
+    $brandname = $_POST["brandname"];
+
 
 
     try {
-        $sql = "UPDATE bid SET biddername= :biddername , contactnum= :contactnum, mybidprice= :mybidprice , itemid= :itemid,description= :description,category= :category , startprice= :startprice Where bidderid=$id";
+        $sql = "UPDATE tblbid SET brandname= :brandname Where id=$id";
         $db = new db();
         // Connect
         $db = $db->connect();
         $stmt = $db->prepare($sql);
 
-        $stmt->bindValue(':biddername', $biddername);
-        $stmt->bindValue(':contactnum', $contactnum);
-        $stmt->bindValue(':mybidprice', $mybidprice);
-        $stmt->bindValue(':itemid', $itemid);
-        $stmt->bindValue(':description', $description);
-        $stmt->bindValue(':category', $category);
-        $stmt->bindValue(':startprice', $startprice);
+        $stmt->bindValue(':brandname', $brandname);
+
 
         $stmt->execute();
         $count = $stmt->rowCount();
@@ -298,11 +289,11 @@ $app->put('/bid/{bidder_id}', function (Request $request, Response $response, ar
 });
 
 
-$app->delete('/bid/{bidder_id}', function (Request $request, Response $response, array $args) {
-    $id = $args['bidder_id'];
+$app->delete('/brand/{brand_id}', function (Request $request, Response $response, array $args) {
+    $id = $args['brand_id'];
 
     try {
-        $sql = "DELETE FROM bid Where bidderid=$id";
+        $sql = "DELETE FROM tblbrand Where id=$id";
         $db = new db();
         // Connect
         $db = $db->connect();
