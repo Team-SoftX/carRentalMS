@@ -213,6 +213,9 @@ $app->post('/vehicle', function (Request $request, Response $response, array $ar
 
     try {
 
+        $db = new db();
+        // Connect
+        $db = $db->connect();
         $sql = "INSERT INTO tblvehicles(VehiclesTitle,VehiclesBrand,VehiclesOverview,PricePerDay,FuelType,ModelYear,SeatingCapacity,Vimage1,Vimage2,Vimage3,Vimage4,Vimage5,AirConditioner,PowerDoorLocks,AntiLockBrakingSystem,BrakeAssist,PowerSteering,DriverAirbag,PassengerAirbag,PowerWindows,CDPlayer,CentralLocking,CrashSensor,LeatherSeats) VALUES(:vehicletitle,:brand,:vehicleoverview,:priceperday,:fueltype,:modelyear,:seatingcapacity,:vimage1,:vimage2,:vimage3,:vimage4,:vimage5,:airconditioner,:powerdoorlocks,:antilockbrakingsys,:brakeassist,:powersteering,:driverairbag,:passengerairbag,:powerwindow,:cdplayer,:centrallocking,:crashcensor,:leatherseats)";
         $query = $db->prepare($sql);
         $query->bindParam(':vehicletitle', $vehicletitle, PDO::PARAM_STR);
@@ -240,7 +243,7 @@ $app->post('/vehicle', function (Request $request, Response $response, array $ar
         $query->bindParam(':crashcensor', $crashcensor, PDO::PARAM_STR);
         $query->bindParam(':leatherseats', $leatherseats, PDO::PARAM_STR);
         $query->execute();
-        $lastInsertId = $db->lastInsertId();
+
         $db = null;
         $count = $query->rowCount();
         $data = array("status" => "success", "rowcount" => $count);
