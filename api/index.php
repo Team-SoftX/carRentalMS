@@ -61,6 +61,52 @@ $app->get('/listing', function (Request $request, Response $response, array $arg
     }
 });
 
+
+$app->get('/regusers', function (Request $request, Response $response, array $args) {
+
+
+    $sql = "SELECT * FROM tblusers";
+
+    try {
+        // Get DB Objectqw
+        $db = new db();
+        // Connect
+        $db = $db->connect();
+
+        $stmt = $db->query($sql);
+        $user = $stmt->fetchAll(PDO::FETCH_OBJ);
+        $db = null;
+        echo json_encode($user);
+    } catch (PDOException $e) {
+        $data = array("status" => "fail");
+        echo json_encode($data);
+    }
+});
+
+$app->get('/managebookings', function (Request $request, Response $response, array $args) {
+
+
+    $sql = "SELECT tblusers.FullName,tblbrands.BrandName,tblvehicles.VehiclesTitle,tblbooking.FromDate,tblbooking.ToDate,tblbooking.message,tblbooking.VehicleId as vid,tblbooking.Status,tblbooking.PostingDate,tblbooking.id  from tblbooking join tblvehicles on tblvehicles.id=tblbooking.VehicleId join tblusers on tblusers.EmailId=tblbooking.userEmail join tblbrands on tblvehicles.VehiclesBrand=tblbrands.id  ";
+
+
+    try {
+        // Get DB Objectqw
+        $db = new db();
+        // Connect
+        $db = $db->connect();
+
+        $stmt = $db->query($sql);
+        $user = $stmt->fetchAll(PDO::FETCH_OBJ);
+        $db = null;
+        echo json_encode($user);
+    } catch (PDOException $e) {
+        $data = array("status" => "fail");
+        echo json_encode($data);
+    }
+});
+
+
+
 $app->post('/antiqueitem', function (Request $request, Response $response, array $args) {
 
     $itemid = $_POST['itemid'];
@@ -96,26 +142,7 @@ $app->post('/antiqueitem', function (Request $request, Response $response, array
 
 
 
-$app->get('/antiqueitems', function (Request $request, Response $response, array $args) {
 
-
-    $sql = "SELECT * FROM antiqueitem";
-
-    try {
-        // Get DB Objectqw
-        $db = new db();
-        // Connect
-        $db = $db->connect();
-
-        $stmt = $db->query($sql);
-        $user = $stmt->fetchAll(PDO::FETCH_OBJ);
-        $db = null;
-        echo json_encode($user);
-    } catch (PDOException $e) {
-        $data = array("status" => "fail");
-        echo json_encode($data);
-    }
-});
 
 
 $app->get('/bids', function (Request $request, Response $response, array $args) {

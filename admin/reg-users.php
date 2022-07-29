@@ -100,29 +100,9 @@ if (strlen($_SESSION['alogin']) == 0) {
 									</tr>
 								</thead>
 
-								<tbody>
+								<tbody id="tablebody">
 
-									<?php $sql = "SELECT * from  tblusers ";
-									$query = $dbh->prepare($sql);
-									$query->execute();
-									$results = $query->fetchAll(PDO::FETCH_OBJ);
-									$cnt = 1;
-									if ($query->rowCount() > 0) {
-										foreach ($results as $result) {				?>
-											<tr>
-												<td><?php echo htmlentities($cnt); ?></td>
-												<td><?php echo htmlentities($result->FullName); ?></td>
-												<td><?php echo htmlentities($result->EmailId); ?></td>
-												<td><?php echo htmlentities($result->ContactNo); ?></td>
-												<td><?php echo htmlentities($result->dob); ?></td>
-												<td><?php echo htmlentities($result->Address); ?></td>
-												<td><?php echo htmlentities($result->City); ?></td>
-												<td><?php echo htmlentities($result->Country); ?></td>
-												<td><?php echo htmlentities($result->RegDate); ?></td>
-											</tr>
-									<?php $cnt = $cnt + 1;
-										}
-									} ?>
+
 
 								</tbody>
 							</table>
@@ -134,6 +114,59 @@ if (strlen($_SESSION['alogin']) == 0) {
 					</div>
 				</div>
 			</div>
+
+			<script>
+				var xht = new XMLHttpRequest();
+				// step2
+				xht.open("GET", "http://localhost/CR/api/regusers", true);
+				// step3
+				xht.send();
+				//step4 -we do the processing upon receiving the response with sta
+				xht.onreadystatechange = function(data) {
+					const myObj = JSON.parse(this.responseText);
+					if (this.readyState == 4 && this.status == 200) {
+
+						var content = "";
+
+						for (let i = 0; i < myObj.length; i++) {
+
+							content +=
+								"<tr><td>" +
+								(i + 1) +
+								"</td>" +
+								"<td>" +
+								myObj[i].FullName +
+								"</td>" +
+								"<td>" +
+								myObj[i].EmailId +
+								"</td>" +
+								"<td>" +
+								myObj[i].ContactNo +
+								"</td>" +
+								"<td>" +
+								myObj[i].dob +
+								"</td>" +
+								"<td>" +
+								myObj[i].Address +
+								"</td>" +
+								"<td>" +
+								myObj[i].City +
+								"</td>" +
+								"<td>" +
+								myObj[i].Country +
+								"</td>" +
+								"<td>" +
+								myObj[i].RegDate +
+								"</td></tr>";
+						}
+
+
+						document.getElementById("tablebody").innerHTML = content;
+					} else if (this.readyState == 4 && this.status == 404) {
+						alert(this.status + "<br>resource not found");
+					}
+				};
+			</script>
 
 			<!-- Loading Scripts -->
 			<script src="js/jquery.min.js"></script>

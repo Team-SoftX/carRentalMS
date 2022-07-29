@@ -115,42 +115,9 @@ if (strlen($_SESSION['alogin']) == 0) {
 									</tr>
 								</thead>
 
-								<tbody>
 
-									<?php $sql = "SELECT tblusers.FullName,tblbrands.BrandName,tblvehicles.VehiclesTitle,tblbooking.FromDate,tblbooking.ToDate,tblbooking.message,tblbooking.VehicleId as vid,tblbooking.Status,tblbooking.PostingDate,tblbooking.id  from tblbooking join tblvehicles on tblvehicles.id=tblbooking.VehicleId join tblusers on tblusers.EmailId=tblbooking.userEmail join tblbrands on tblvehicles.VehiclesBrand=tblbrands.id  ";
-									$query = $dbh->prepare($sql);
-									$query->execute();
-									$results = $query->fetchAll(PDO::FETCH_OBJ);
-									$cnt = 1;
-									if ($query->rowCount() > 0) {
-										foreach ($results as $result) {				?>
-											<tr>
-												<td><?php echo htmlentities($cnt); ?></td>
-												<td><?php echo htmlentities($result->FullName); ?></td>
-												<td><a href="edit-vehicle.php?id=<?php echo htmlentities($result->vid); ?>"><?php echo htmlentities($result->BrandName); ?> , <?php echo htmlentities($result->VehiclesTitle); ?></td>
-												<td><?php echo htmlentities($result->FromDate); ?></td>
-												<td><?php echo htmlentities($result->ToDate); ?></td>
-												<td><?php echo htmlentities($result->message); ?></td>
-												<td><?php
-													if ($result->Status == 0) {
-														echo htmlentities('Not Confirmed yet');
-													} else if ($result->Status == 1) {
-														echo htmlentities('Confirmed');
-													} else {
-														echo htmlentities('Cancelled');
-													}
-													?></td>
-												<td><?php echo htmlentities($result->PostingDate); ?></td>
-												<td><a href="manage-bookings.php?aeid=<?php echo htmlentities($result->id); ?>" onclick="return confirm('Do you really want to Confirm this booking')"> Confirm</a> /
+								<tbody id="tablebody">
 
-
-													<a href="manage-bookings.php?eid=<?php echo htmlentities($result->id); ?>" onclick="return confirm('Do you really want to Cancel this Booking')"> Cancel</a>
-												</td>
-
-											</tr>
-									<?php $cnt = $cnt + 1;
-										}
-									} ?>
 
 								</tbody>
 							</table>
@@ -162,6 +129,68 @@ if (strlen($_SESSION['alogin']) == 0) {
 					</div>
 				</div>
 			</div>
+			<script>
+				var xht = new XMLHttpRequest();
+				// step2
+				xht.open("GET", "http://localhost/CR/api/managebookings", true);
+				// step3
+				xht.send();
+				//step4 -we do the processing upon receiving the response with sta
+				xht.onreadystatechange = function(data) {
+					const myObj = JSON.parse(this.responseText);
+					if (this.readyState == 4 && this.status == 200) {
+
+						var content = "";
+
+						for (let i = 0; i < myObj.length; i++) {
+
+							content +=
+								"<tr><td>" +
+								(i + 1) +
+								"</td>" +
+								"<td>" +
+								myObj[i].FullName +
+								"</td>" +
+								"<td><a href='edit-vehicle.php?id=" + myObj[i].vid + "'>" +
+								myObj[i].BrandName +
+								" , " + myObj[i].VehiclesTitle +
+								"</td>" +
+								"<td>" +
+								myObj[i].FromDate +
+								"</td>" +
+								"<td>" +
+								myObj[i].ToDate +
+								"</td>" +
+								"<td>" +
+								myObj[i].message +
+								"</td>";
+
+							if (myObj[i].Status == 0) {
+								content += "<td> Not Confirmed yet </td>";
+
+							} else if (myObj[i].Status == 1) {
+								content += "<td> Confirmed </td>";
+
+							} else {
+								content += "<td> Cancelled </td>";
+
+							}
+							content +=
+								"<td>" +
+								myObj[i].PostingDate +
+								"</td>" +
+								"<td><a href='manage-bookings.php?aeid=" + myObj[i].id + "' onclick ='return confirm('Do you really want to Confirm this booking')'> Confirm </a> /" +
+								" <a href='manage-bookings.php?eid=" + myObj[i].id + "' onclick='return confirm('Do you really want to Cancel this Booking')'> Cancel</a>" +
+								"</td></tr>";
+						}
+
+
+						document.getElementById("tablebody").innerHTML = content;
+					} else if (this.readyState == 4 && this.status == 404) {
+						alert(this.status + "<br>resource not found");
+					}
+				};
+			</script>
 
 			<!-- Loading Scripts -->
 			<script src="js/jquery.min.js"></script>
