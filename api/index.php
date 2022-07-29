@@ -12,8 +12,8 @@ $app = new \Slim\App;
 
 $app->get('/mybookings', function (Request $request, Response $response, array $args) {
 
-    // $useremail = $_SESSION['login'];
-    $useremail = "1@gmail.com";
+    $useremail = $_SESSION['login'];
+    // $useremail = "1@gmail.com";
     $sql = "SELECT tblvehicles.Vimage1 as Vimage1,tblvehicles.VehiclesTitle,tblvehicles.id as vid,tblbrands.BrandName,tblbooking.FromDate,tblbooking.ToDate,tblbooking.message,tblbooking.Status  from tblbooking join tblvehicles on tblbooking.VehicleId=tblvehicles.id join tblbrands on tblbrands.id=tblvehicles.VehiclesBrand where tblbooking.userEmail=:useremail";
 
     try {
