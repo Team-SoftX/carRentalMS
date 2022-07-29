@@ -61,6 +61,58 @@ $app->get('/listing', function (Request $request, Response $response, array $arg
     }
 });
 
+$app->get('/brands', function (Request $request, Response $response, array $args) {
+
+
+
+
+    $sql = "SELECT * from  tblbrands ";
+
+    try {
+        // Get DB Objectqw
+        $db = new db();
+        // Connect
+        $db = $db->connect();
+
+        $query = $db->prepare($sql);
+        $query->execute();
+        $results = $query->fetchAll(PDO::FETCH_OBJ);
+
+        echo json_encode($results);
+    } catch (PDOException $e) {
+        $data = array("status" => "fail");
+        echo json_encode($data);
+    }
+});
+
+$app->post('/createBrand', function (Request $request, Response $response, array $args) {
+
+    $BrandName = $_POST['BrandName'];
+
+
+
+    try {
+        $sql = "INSERT INTO tblbrands (BrandName) VALUES
+			               (:BrandName)";
+        $db = new db();
+        // Connect
+        $db = $db->connect();
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':BrandName', $BrandName);
+
+
+        $stmt->execute();
+        $count = $stmt->rowCount();
+        $db = null;
+
+        $data = array("status" => "success", "rowcount" => $count);
+        echo json_encode($data);
+    } catch (PDOException $e) {
+        $data = array("status" => "fail");
+        echo json_encode($data);
+        echo json_encode($e);
+    }
+});
 
 $app->get('/regusers', function (Request $request, Response $response, array $args) {
 
