@@ -1,5 +1,7 @@
 <?php
-//error_reporting(0);
+//error_reporting(0);\
+session_start();
+require('config.php');
 if (isset($_POST['signup'])) {
   $fname = $_POST['fullname'];
   $email = $_POST['emailid'];
