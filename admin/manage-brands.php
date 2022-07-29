@@ -8,15 +8,15 @@ if (strlen($_SESSION['alogin']) == 0) {
 	// Code for change password	
 	if (isset($_POST['submit'])) {
 		$brand = $_POST['brand'];
-		$sql = "INSERT INTO  tblbrands(BrandName) VALUES(:brand)";
+		$sql = 'INSERT INTO  tblbrands(BrandName) VALUES(:brand)';
 		$query = $dbh->prepare($sql);
 		$query->bindParam(':brand', $brand, PDO::PARAM_STR);
 		$query->execute();
 		$lastInsertId = $dbh->lastInsertId();
 		if ($lastInsertId) {
-			$msg = "Brand Created successfully";
+			$msg = 'Brand Created successfully';
 		} else {
-			$error = "Something went wrong. Please try again";
+			$error = 'Something went wrong. Please try again';
 		}
 	}
 }
@@ -31,11 +31,11 @@ if (strlen($_SESSION['alogin']) == 0) {
 } else {
 	if (isset($_GET['del'])) {
 		$id = $_GET['del'];
-		$sql = "delete from tblbrands  WHERE id=:id";
+		$sql = 'delete from tblbrands  WHERE id=:id';
 		$query = $dbh->prepare($sql);
 		$query->bindParam(':id', $id, PDO::PARAM_STR);
 		$query->execute();
-		$msg = "Page data updated  successfully";
+		$msg = 'Page data updated  successfully';
 	}
 
 
@@ -43,34 +43,34 @@ if (strlen($_SESSION['alogin']) == 0) {
 ?>
 
 	<!doctype html>
-	<html lang="en" class="no-js">
+	<html lang='en' class='no-js'>
 
 	<head>
-		<meta charset="UTF-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-		<meta name="description" content="">
-		<meta name="author" content="">
-		<meta name="theme-color" content="#3e454c">
+		<meta charset='UTF-8'>
+		<meta http-equiv='X-UA-Compatible' content='IE=edge'>
+		<meta name='viewport' content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1'>
+		<meta name='description' content=''>
+		<meta name='author' content=''>
+		<meta name='theme-color' content='#3e454c'>
 
 		<title>Car Rental Portal |Admin Manage Brands </title>
 
 		<!-- Font awesome -->
-		<link rel="stylesheet" href="css/font-awesome.min.css">
+		<link rel='stylesheet' href='css/font-awesome.min.css'>
 		<!-- Sandstone Bootstrap CSS -->
-		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<link rel='stylesheet' href='css/bootstrap.min.css'>
 		<!-- Bootstrap Datatables -->
-		<link rel="stylesheet" href="css/dataTables.bootstrap.min.css">
+		<link rel='stylesheet' href='css/dataTables.bootstrap.min.css'>
 		<!-- Bootstrap social button library -->
-		<link rel="stylesheet" href="css/bootstrap-social.css">
+		<link rel='stylesheet' href='css/bootstrap-social.css'>
 		<!-- Bootstrap select -->
-		<link rel="stylesheet" href="css/bootstrap-select.css">
+		<link rel='stylesheet' href='css/bootstrap-select.css'>
 		<!-- Bootstrap file input -->
-		<link rel="stylesheet" href="css/fileinput.min.css">
+		<link rel='stylesheet' href='css/fileinput.min.css'>
 		<!-- Awesome Bootstrap checkbox -->
-		<link rel="stylesheet" href="css/awesome-bootstrap-checkbox.css">
+		<link rel='stylesheet' href='css/awesome-bootstrap-checkbox.css'>
 		<!-- Admin Stye -->
-		<link rel="stylesheet" href="css/style.css">
+		<link rel='stylesheet' href='css/style.css'>
 		<style>
 			.errorWrap {
 				padding: 10px;
@@ -94,25 +94,62 @@ if (strlen($_SESSION['alogin']) == 0) {
 	</head>
 
 	<body>
+
+		<script>
+			var xhr = new XMLHttpRequest();
+			xhr.open('GET', 'http://localhost/carRentalMS/api/brands', true);
+			xhr.send();
+			xhr.onreadystatechange = function(event) {
+
+				if (this.readyState == 4 && this.status == 200) {
+
+
+					var brands = JSON.parse(this.responseText);
+					// var strList = JSON.stringify(carLists);
+
+					content = "";
+					for (let i = 0; i < brands.length; i++) {
+
+						content += "<tr>"+
+												"<td>"+ (i+1)+"</td>"+
+												"<td>"+brands[i].BrandName+"</td>"+
+												"<td>"+brands[i].CreationDate+"</td>"+
+												"<td>"+brands[i].UpdationDate+"</td>"+
+												"<td><a href='edit-brand.php?id="+brands[i].id+"'><i class='fa fa-edit'></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+
+													"<a href='manage-brands.php?del="+brands[i].id+"' onclick='return confirm(' Do you want to delete');'><i class='fa fa-trash'></i></a>"+
+												"</td>"+
+											"</tr>";
+
+					}
+					document.getElementById('barnds').innerHTML = content;
+
+
+
+				} else if (this.readyState == 4 && this.status == 404) {
+					alert('No data found');
+
+				}
+			};
+		</script>
 		<?php include('includes/header.php'); ?>
 
-		<div class="ts-main-content">
+		<div class='ts-main-content'>
 			<?php include('includes/leftbar.php'); ?>
-			<div class="content-wrapper">
-				<div class="container-fluid">
+			<div class='content-wrapper'>
+				<div class='container-fluid'>
 
-					<div class="row">
-						<div class="col-md-12">
+					<div class='row'>
+						<div class='col-md-12'>
 
-							<h2 class="page-title">Manage Brands</h2>
+							<h2 class='page-title'>Manage Brands</h2>
 
 							<!-- Zero Configuration Table -->
 
 
-							<?php if ($error) { ?><div class=""><strong>ERROR</strong>:<?php echo htmlentities($error); ?> </div><?php } else if ($msg) { ?><div class="succWrap"><strong>SUCCESS</strong>:<?php echo htmlentities($msg); ?> </div><?php } ?>
-							<table class="table table-border" cellspacing="0" width="100%">
+							<?php if ($error) { ?><div class=''><strong>ERROR</strong>:<?php echo htmlentities($error); ?> </div><?php } else if ($msg) { ?><div class='succWrap'><strong>SUCCESS</strong>:<?php echo htmlentities($msg); ?> </div><?php } ?>
+							<table class='table table-border' cellspacing='0' width='100%'>
 
-								<!-- id="zctb" -->
+								<!-- id='zctb' -->
 								<thead>
 									<tr>
 										<th>#</th>
@@ -123,27 +160,9 @@ if (strlen($_SESSION['alogin']) == 0) {
 									</tr>
 								</thead>
 
-								<tbody>
+								<tbody id='barnds'>
 
-									<?php $sql = "SELECT * from  tblbrands ";
-									$query = $dbh->prepare($sql);
-									$query->execute();
-									$results = $query->fetchAll(PDO::FETCH_OBJ);
-									$cnt = 1;
-									if ($query->rowCount() > 0) {
-										foreach ($results as $result) {				?>
-											<tr>
-												<td><?php echo htmlentities($cnt); ?></td>
-												<td><?php echo htmlentities($result->BrandName); ?></td>
-												<td><?php echo htmlentities($result->CreationDate); ?></td>
-												<td><?php echo htmlentities($result->UpdationDate); ?></td>
-												<td><a href="edit-brand.php?id=<?php echo $result->id; ?>"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-													<a href="manage-brands.php?del=<?php echo $result->id; ?>" onclick="return confirm('Do you want to delete');"><i class="fa fa-trash"></i></a>
-												</td>
-											</tr>
-									<?php $cnt = $cnt + 1;
-										}
-									} ?>
+									
 
 								</tbody>
 							</table>
@@ -156,35 +175,35 @@ if (strlen($_SESSION['alogin']) == 0) {
 
 						</div>
 					</div>
-					<div class="row">
+					<div class='row'>
 
 
-						<h2 class="page-title">Create Brand</h2>
+						<h2 class='page-title'>Create Brand</h2>
 
-						<div class="container row">
-
-
+						<div class='container row'>
 
 
-							<form method="post" name="chngpwd" class="form-horizontal" onSubmit="return valid();">
 
 
-								<?php if ($error) { ?><div class="errorWrap"><strong>ERROR</strong>:<?php echo htmlentities($error); ?> </div><?php } else if ($msg) { ?><div class="succWrap"><strong>SUCCESS</strong>:<?php echo htmlentities($msg); ?> </div><?php } ?>
-								<div class="form-group">
-									<label class="col-sm-4 control-label">Brand Name</label>
-									<div class="col-sm-8">
-										<input type="text" class="form-control" name="brand" id="brand" required>
+							<form method='post' name='chngpwd' class='form-horizontal' onSubmit='return valid();'>
+
+
+								<?php if ($error) { ?><div class='errorWrap'><strong>ERROR</strong>:<?php echo htmlentities($error); ?> </div><?php } else if ($msg) { ?><div class='succWrap'><strong>SUCCESS</strong>:<?php echo htmlentities($msg); ?> </div><?php } ?>
+								<div class='form-group'>
+									<label class='col-sm-4 control-label'>Brand Name</label>
+									<div class='col-sm-8'>
+										<input type='text' class='form-control' name='brand' id='brand' required>
 									</div>
 								</div>
-								<div class="hr-dashed"></div>
+								<div class='hr-dashed'></div>
 
 
 
 
-								<div class="form-group">
-									<div class="col-sm-8 col-sm-offset-4">
+								<div class='form-group'>
+									<div class='col-sm-8 col-sm-offset-4'>
 
-										<button class="btn btn-primary" name="submit" type="submit">Create</button>
+										<button class='btn btn-primary' name='submit' type='submit'>Create</button>
 									</div>
 								</div>
 
@@ -207,15 +226,15 @@ if (strlen($_SESSION['alogin']) == 0) {
 			</div>
 
 			<!-- Loading Scripts -->
-			<script src="js/jquery.min.js"></script>
-			<script src="js/bootstrap-select.min.js"></script>
-			<script src="js/bootstrap.min.js"></script>
-			<script src="js/jquery.dataTables.min.js"></script>
-			<script src="js/dataTables.bootstrap.min.js"></script>
-			<script src="js/Chart.min.js"></script>
-			<script src="js/fileinput.js"></script>
-			<script src="js/chartData.js"></script>
-			<script src="js/main.js"></script>
+			<script src='js/jquery.min.js'></script>
+			<script src='js/bootstrap-select.min.js'></script>
+			<script src='js/bootstrap.min.js'></script>
+			<script src='js/jquery.dataTables.min.js'></script>
+			<script src='js/dataTables.bootstrap.min.js'></script>
+			<script src='js/Chart.min.js'></script>
+			<script src='js/fileinput.js'></script>
+			<script src='js/chartData.js'></script>
+			<script src='js/main.js'></script>
 	</body>
 
 	</html>
